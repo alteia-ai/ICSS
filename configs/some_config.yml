@@ -1,0 +1,48 @@
+####### General #######
+
+ext: "template"
+N_CLASSES: 2
+IN_CHANNELS: 3
+WINDOW_SIZE: [512, 512]
+NET_NAME: LinkNet34
+PRETRAIN: False
+SUB_TRAIN: 1
+WORKERS: 12
+test_size: 0.2
+STRIDE: 256
+TEST_WORKERS: 1
+SAVE_FOLDER: data/outputs/
+PATH_MODELS: data/models/
+
+####### Initial learning #######
+
+EPOCHS: 10
+OPTIM_BASELR: 0.05
+OPTIM_STEPS: [5, 8]
+EPOCH_SIZE: 10000
+BATCH_SIZE: 8
+WEIGHTED_LOSS: False
+TRANSFORMATION: True
+HEAVY_AUG: False
+COL_JIT: False
+
+####### Incremental learning #######
+NEW_CLASSES: 1  # Number of additional class. This code works only with 1.
+CL_LR: 0.00002  # Learning rate during the finetuning learning steps
+CL_STEPS: 10  # number of learning steps
+FREEZE: False 
+ENCODER_ONLY: False
+TRAIN_ON_SPARSE_GT: True  # deactivate to train on full GT (and not points)
+N_POINTS: 300  # Number of sparse annotations
+PSEUDOLABELS: True  # Deactivate to sample labels from GT (A user would have to provide them irl int this case)
+WEIGHTED_INCREMENTAL_LOSS: False
+PATIENCE: 5  # Leraning steps before early stopping
+## Reglarizations
+SDR: False
+SDR_opts:
+  LATENT_SPACE: True  # True:> Compute in the latent space dim (orginal SDR work). False=> Compute in the original spatial dim.
+  ORIGINAL_SPACE_opts:
+    PROTOTYPE_CHANNELS: 512 #512  # 3=> in the decoder space // 512 in the encoder space
+DISCA: False
+FESTA: False
+PodNet: False
