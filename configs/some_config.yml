@@ -3,9 +3,9 @@
 ext: "template"
 N_CLASSES: 2
 IN_CHANNELS: 3
-WINDOW_SIZE: [512, 512]
+WINDOW_SIZE: [256, 256]
 NET_NAME: LinkNet34
-PRETRAIN: False
+PRETRAIN: True
 SUB_TRAIN: 1
 WORKERS: 12
 test_size: 0.2
@@ -20,7 +20,7 @@ EPOCHS: 10
 OPTIM_BASELR: 0.05
 OPTIM_STEPS: [5, 8]
 EPOCH_SIZE: 10000
-BATCH_SIZE: 8
+BATCH_SIZE: 2
 WEIGHTED_LOSS: False
 TRANSFORMATION: True
 HEAVY_AUG: False
@@ -36,7 +36,7 @@ TRAIN_ON_SPARSE_GT: True  # deactivate to train on full GT (and not points)
 N_POINTS: 300  # Number of sparse annotations
 PSEUDOLABELS: True  # Deactivate to sample labels from GT (A user would have to provide them irl int this case)
 WEIGHTED_INCREMENTAL_LOSS: False
-PATIENCE: 5  # Leraning steps before early stopping
+PATIENCE: 15  # Leraning steps before early stopping
 ## Reglarizations
 SDR: False
 SDR_opts:
