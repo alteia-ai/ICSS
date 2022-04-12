@@ -18,7 +18,6 @@ def main(directory):
     new_folder = os.path.join(directory, "roads_buildings")
     if not os.path.exists(new_folder):
         os.mkdir(new_folder)
-        os.mkdir(new_folder+"/imgs")
         os.mkdir(new_folder+"/gts")
     for i, j in tqdm(zip(imgs, gts), total=len(imgs)):
         gt = cv.imread(j, 0)
@@ -28,7 +27,7 @@ def main(directory):
         gt[gt==4] = 0
         gt[gt==5] = 0
         gt[gt==3] = 0
-        cv.imwrite(os.path.join(new_folder, j), gt)
+        cv.imwrite(os.path.join(new_folder, "gts", os.path.basename(j)), gt)
     print("Conversion done.")
 
 if __name__ == "__main__":

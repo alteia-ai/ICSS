@@ -32,6 +32,7 @@ python preprocess/format_gt.py -n 6 -d <PathToMyDataset>/gts
 To create a sub-folder with only roads and buildings:
 ```Shell
 python preprocess/roads_buildings.py -d <PathToMyDataset>
+ln -s <PathToMyDataset>/imgs <PathToMyDataset>/buildings_cars/imgs
 ```
 
 ## To train:
