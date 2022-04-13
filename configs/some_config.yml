@@ -13,6 +13,7 @@ STRIDE: 256
 TEST_WORKERS: 1
 SAVE_FOLDER: data/outputs/
 PATH_MODELS: data/models/
+ADD_SEED: 0  # to modify the random seeds
 
 ####### Initial learning #######
 
@@ -27,7 +28,7 @@ HEAVY_AUG: False
 COL_JIT: False
 
 ####### Incremental learning #######
-NEW_CLASSES: 1  # Number of additional class. This code works only with 1.
+NEW_CLASSES: 1  # Number of additional class. This code works only with 1 or 0 (ie no finetuning).
 CL_LR: 0.00002  # Learning rate during the finetuning learning steps
 CL_STEPS: 10  # number of learning steps
 FREEZE: False 
@@ -35,6 +36,7 @@ ENCODER_ONLY: False
 TRAIN_ON_SPARSE_GT: True  # deactivate to train on full GT (and not points)
 N_POINTS: 300  # Number of sparse annotations
 PSEUDOLABELS: True  # Deactivate to sample labels from GT (A user would have to provide them irl int this case)
+MULT_PSEUDOLABELS: 10 # if pseudolabels == true: Ratio of pseudo labels compared to annotations  
 WEIGHTED_INCREMENTAL_LOSS: False
 PATIENCE: 15  # Leraning steps before early stopping
 ## Reglarizations

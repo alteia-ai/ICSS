@@ -31,8 +31,8 @@ def main(dataset, config, pretrain_file):
     """Train a semantic segmentation network on GIS datasets."""
     # Set seeds for reproductibility
     cfg = config_factory(config)
-    random.seed(42+0)
-    torch.manual_seed(7+0)
+    random.seed(42+cfg.ADD_SEED)
+    torch.manual_seed(7+cfg.ADD_SEED)
     torch.backends.cudnn.deterministic = True
 
     output = cfg.SAVE_FOLDER

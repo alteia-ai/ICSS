@@ -22,8 +22,8 @@ from src.semantic_segmentation.inferer import Inferer
 def infer(config, pretrain_file, outdir, image):
     """Semantic segmentation demo."""
     cfg = config_factory(config)
-    random.seed(42+0)
-    torch.manual_seed(7+0)
+    random.seed(42+cfg.ADD_SEED)
+    torch.manual_seed(7+cfg.ADD_SEED)
     torch.backends.cudnn.deterministic = True
     net = Inferer(cfg, pretrain_file, image)
     tic = time.time()

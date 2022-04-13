@@ -39,7 +39,7 @@ palette={
 class IncrementalTrainer(Trainer):
     def __init__(self, cfg, dataset, pretrain_file):
         super(IncrementalTrainer, self).__init__(cfg)
-        if cfg.NEW_CLASSES != 1:
+        if cfg.NEW_CLASSES not in {0, 1}:
             raise NotImplementedError()
         self.dataset = dataset
         test_dataset = RGBIncrementalDataset(dataset, self.cfg, train=False, finetune=True)
@@ -97,12 +97,10 @@ class IncrementalTrainer(Trainer):
             flat_gt = gt.reshape((-1))
             sparse_gt = np.full_like(flat_gt, 255, dtype=np.uint8)
             supp_class = 0 # ie does NOT generate pseudo labels also for bg and new class if PSEUDOLABELS
-            mult_pseudolabels = 10
         else:
             flat_gt = gt.reshape((-1))
             sparse_gt = sparse_gt.reshape((-1))
             supp_class = 1 # ie generate pseudo labels also for bg and new class if PSEUDOLABELS
-            mult_pseudolabels = 1
             logging.info(f"Currently {sum(sparse_gt!=255)} annotations.")
         if self.cfg.TRAIN_ON_SPARSE_GT:
             for i in range(self.cfg.N_CLASSES):
@@ -110,7 +108,8 @@ class IncrementalTrainer(Trainer):
                     probs = (initial_pred[i] > 0.99).reshape((-1)).numpy()
                     probs[sparse_gt!=255] = 0
                     probs = probs / np.sum(probs)  # normalize
-                    sparse_points = np.random.choice(np.prod(gt.shape), mult_pseudolabels*self.cfg.N_POINTS, replace=False, p=probs)
+                    n_points = min(self.cfg.MULT_PSEUDOLABELS * self.cfg.N_POINTS, int(np.sum(probs > 0)))
+                    sparse_points = np.random.choice(np.prod(gt.shape), n_points, replace=False, p=probs)
                 else:
                     probs = flat_gt == i
                     probs[sparse_gt!=255] = 0
